@@ -435,7 +435,7 @@
   // CONFIGURAÇÃO. Preenche estas duas linhas antes de publicar.
   // --------------------------------------------------------------
   // 1) Cola aqui o URL do teu Google Apps Script Web App (ver instruções em apps-script.txt)
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzcIUYh_rgU4aQmfCAdJoYaE3JUJmI6LSsjNwlHfeGoymZX7SZUxw5CsB4XsGE0adq7/exec";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLqc3VMpg2hXWLPEE8wPkrNDSlY-yJwuLjxCwfqU0anXTFU73bdnytuT22aVmbQh8e/exec";
 
   // 2) Link de exportação direta do Google Docs, faz o download em formato Word
   //    assim que a pessoa clica, sem passar pelo editor.
@@ -461,19 +461,32 @@
       data: new Date().toISOString()
     };
 
+    // Limite de tempo de 8 segundos. Se o Google não responder a tempo,
+    // o pedido é cancelado e mostramos erro em vez de ficar preso para sempre.
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
     try {
       await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
       downloadLink.href = DOCUMENT_URL;
       form.classList.add('hide');
       successBlock.classList.add('show');
     } catch (err) {
+      clearTimeout(timeoutId);
       errorMsg.classList.add('show');
+      if (err.name === 'AbortError') {
+        errorMsg.textContent = 'O Google demorou demasiado tempo a responder. Confirma a configuração do Apps Script e tenta de novo.';
+      } else {
+        errorMsg.textContent = 'Não foi possível enviar. Confirma os dados e tenta de novo.';
+      }
       submitBtn.disabled = false;
       submitBtn.textContent = 'Quero o documento';
     }
