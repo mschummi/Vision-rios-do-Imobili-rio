@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TurboTráfego · Mercado da Habitação em Portugal</title>
+<meta name="description" content="Recebe o estudo completo sobre dores, ICP e oportunidades digitais no imobiliário, crédito e seguros em Portugal.">
+<style>
+  :root{
+    --navy: #0F2438;
+    --navy-deep: #081522;
+    --gold: #C9A24B;
+    --gold-soft: #E4CD8F;
+    --paper: #F6F4EF;
+    --ink: #1B2430;
+    --slate: #5C6A78;
+    --line: rgba(15,36,56,0.12);
+    --radius: 4px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-weight:600;
+    margin:0;
+    color:var(--navy);
+  }
+
+  a{color:inherit;}
+
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- header ---------- */
+  header{
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    font-family:"Fraunces", serif;
+    font-size:19px;
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .brand small{
+    font-family:"Inter", sans-serif;
+    font-weight:500;
+    font-size:12px;
+    color:var(--slate);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:76px 0 64px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    right:-8%;
+    top:-10%;
+    width:520px;
+    height:520px;
+    background:radial-gradient(circle, rgba(201,162,75,0.16) 0%, rgba(201,162,75,0) 68%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    border:1px solid rgba(201,162,75,0.4);
+    border-radius:999px;
+    padding:6px 14px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(32px, 5vw, 50px);
+    line-height:1.08;
+    max-width:15ch;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--gold);
+  }
+  .hero p.lede{
+    margin-top:20px;
+    max-width:52ch;
+    font-size:17px;
+    color:var(--slate);
+  }
+
+  /* the signature graphic: a rising market line, drawn on load */
+  .trendline{
+    margin-top:44px;
+    width:100%;
+    max-width:560px;
+    height:auto;
+    display:block;
+  }
+  .trendline path.line{
+    fill:none;
+    stroke:var(--gold);
+    stroke-width:2.5;
+    stroke-linecap:round;
+    stroke-dasharray:600;
+    stroke-dashoffset:600;
+    animation:draw 1.6s ease forwards 0.2s;
+  }
+  .trendline .dot{
+    fill:var(--navy);
+    opacity:0;
+    animation:fadein 0.4s ease forwards 1.7s;
+  }
+  .trendline .axis{
+    stroke:var(--line);
+    stroke-width:1;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes fadein{ to{ opacity:1; } }
+  @media (prefers-reduced-motion: reduce){
+    .trendline path.line{ animation:none; stroke-dashoffset:0; }
+    .trendline .dot{ animation:none; opacity:1; }
+  }
+
+  /* ---------- content grid ---------- */
+  .split{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap:56px;
+    padding:8px 0 72px;
+    align-items:start;
+  }
+  @media (max-width: 860px){
+    .split{grid-template-columns:1fr; gap:40px;}
+  }
+
+  .whats-inside h2{
+    font-size:22px;
+    margin-bottom:18px;
+  }
+  .whats-inside ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .whats-inside li{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .whats-inside li .mark{
+    flex:0 0 auto;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    font-size:12px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:1px;
+  }
+  .whats-inside li span.txt strong{
+    display:block;
+    color:var(--navy);
+    font-weight:600;
+    margin-bottom:2px;
+  }
+  .whats-inside li span.txt{color:var(--slate); font-size:14px;}
+
+  .source-note{
+    margin-top:28px;
+    font-size:12.5px;
+    color:var(--slate);
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+
+  /* ---------- form card ---------- */
+  .card{
+    background:var(--navy);
+    color:#EFEDE6;
+    border-radius:var(--radius);
+    padding:36px 32px;
+    position:relative;
+  }
+  .card h3{
+    color:#fff;
+    font-size:20px;
+    margin-bottom:6px;
+  }
+  .card p.sub{
+    color:#B9C2CC;
+    font-size:14px;
+    margin:0 0 26px;
+  }
+
+  form{display:flex;flex-direction:column;gap:16px;}
+
+  .field label{
+    display:block;
+    font-size:12px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    margin-bottom:6px;
+  }
+  .field input{
+    width:100%;
+    padding:12px 14px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:3px;
+    color:#fff;
+    font-size:15px;
+    font-family:inherit;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .field input::placeholder{color:rgba(255,255,255,0.35);}
+  .field input:focus{
+    outline:none;
+    border-color:var(--gold);
+    background:rgba(255,255,255,0.1);
+  }
+  .field input:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
+  }
+
+  button.submit{
+    margin-top:6px;
+    padding:14px 18px;
+    background:var(--gold);
+    color:var(--navy-deep);
+    border:none;
+    border-radius:3px;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:0.01em;
+    cursor:pointer;
+    transition:background 0.15s ease, transform 0.1s ease;
+  }
+  button.submit:hover{background:var(--gold-soft);}
+  button.submit:active{transform:translateY(1px);}
+  button.submit:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  button.submit:disabled{opacity:0.6;cursor:progress;}
+
+  .fine-print{
+    margin-top:14px;
+    font-size:11.5px;
+    color:#8A95A1;
+    line-height:1.5;
+  }
+
+  .error-msg{
+    display:none;
+    font-size:13px;
+    color:#F0B4B4;
+    margin-top:-4px;
+  }
+  .error-msg.show{display:block;}
+
+  /* success state */
+  .success{
+    display:none;
+    text-align:left;
+  }
+  .success.show{display:block;}
+  .success .check{
+    width:44px;height:44px;
+    border-radius:50%;
+    background:var(--gold);
+    color:var(--navy-deep);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+    margin-bottom:18px;
+  }
+  .success h3{color:#fff;}
+  .success p{color:#B9C2CC;font-size:14px;}
+  .download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:18px;
+    padding:14px 20px;
+    background:#fff;
+    color:var(--navy-deep);
+    border-radius:3px;
+    font-weight:700;
+    font-size:14.5px;
+    text-decoration:none;
+  }
+  .download-btn:hover{background:var(--gold-soft);}
+
+  form.hide{display:none;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:26px 0 40px;
+    font-size:12.5px;
+    color:var(--slate);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">Miguel Conceição <small>TurboTráfego · Agência de Marketing Digital</small></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Estudo de Mercado 2026</span>
+    <h1>O mapa completo da dor e da <em>oportunidade</em> no imobiliário, crédito e seguros</h1>
+    <p class="lede">
+      Um levantamento detalhado sobre quem procura casa em Portugal, quem vende estes serviços,
+      e as lacunas digitais que ainda ninguém explorou a sério. Deixa os teus dados e recebe
+      o documento completo em segundos.
+    </p>
+
+    <svg class="trendline" viewBox="0 0 560 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line class="axis" x1="0" y1="140" x2="560" y2="140"/>
+      <path class="line" d="M0,120 C60,122 90,110 130,104 C180,96 210,80 250,74 C300,66 330,52 380,42 C430,32 470,26 560,10" />
+      <circle class="dot" cx="560" cy="10" r="5"/>
+    </svg>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="split">
+    <div class="whats-inside">
+      <h2>O que vais encontrar no documento</h2>
+      <ul>
+        <li>
+          <span class="mark">1</span>
+          <span class="txt"><strong>As dores de quem procura casa</strong>Crédito, fiscalidade, seguros, burocracia e mercado, cruzado por idade, estrato social, região e estado civil.</span>
+        </li>
+        <li>
+          <span class="mark">2</span>
+          <span class="txt"><strong>As dores de quem vende estes serviços</strong>Agentes imobiliários, intermediários de crédito e mediadores de seguros, vistos de dentro.</span>
+        </li>
+        <li>
+          <span class="mark">3</span>
+          <span class="txt"><strong>O mapa digital do setor</strong>O que já existe, as lacunas, as oportunidades reais e os diferenciais ainda por explorar em Portugal.</span>
+        </li>
+        <li>
+          <span class="mark">4</span>
+          <span class="txt"><strong>Recomendações práticas</strong>Pontos fortes, pontos fracos e leituras para aprofundar o tema.</span>
+        </li>
+      </ul>
+      <p class="source-note">
+        Documento preparado com dados do Banco de Portugal, Portal das Finanças e INE.
+        Uso pessoal e profissional, sem custo.
+      </p>
+    </div>
+
+    <div class="card">
+      <form id="lead-form">
+        <h3>Recebe o documento agora</h3>
+        <p class="sub">Preenche os três campos. O acesso aparece de imediato nesta página.</p>
+
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" placeholder="O teu nome completo" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="nome@exemplo.com" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="whatsapp">WhatsApp</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="+351 9XX XXX XXX" required autocomplete="tel">
+        </div>
+
+        <p class="error-msg" id="error-msg">Não foi possível enviar. Confirma os dados e tenta de novo.</p>
+
+        <button type="submit" class="submit" id="submit-btn">Quero o documento</button>
+        <p class="fine-print">Ao submeter, aceitas ser contactado sobre este e outros conteúdos do TurboTráfego. Os teus dados não são partilhados com terceiros.</p>
+      </form>
+
+      <div class="success" id="success-block">
+        <div class="check">✓</div>
+        <h3>Está feito.</h3>
+        <p>Obrigado. O teu documento está pronto a abrir abaixo.</p>
+        <a class="download-btn" id="download-link" href="#" target="_blank" rel="noopener">
+          Descarregar o documento ↓
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:8px;">
+    <span>Miguel Conceição · TurboTráfego, Agência de Marketing Digital</span>
+    <span>Lisboa, Portugal</span>
+  </div>
+</footer>
+
+<script>
+  // --------------------------------------------------------------
+  // CONFIGURAÇÃO. Preenche estas duas linhas antes de publicar.
+  // --------------------------------------------------------------
+  // 1) Cola aqui o URL do teu Google Apps Script Web App (ver instruções em apps-script.txt)
+  const GOOGLE_SCRIPT_URL = "COLOCA_AQUI_O_URL_DO_TEU_GOOGLE_APPS_SCRIPT";
+
+  // 2) Cola aqui o link direto para o documento (Google Drive com partilha
+  //    "Qualquer pessoa com o link", ou um ficheiro na mesma pasta do GitHub Pages,
+  //    por exemplo "./Analise_Mercado_Habitacao_Portugal.docx")
+  const DOCUMENT_URL = "COLOCA_AQUI_O_LINK_DO_DOCUMENTO";
+  // --------------------------------------------------------------
+
+  const form = document.getElementById('lead-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const errorMsg = document.getElementById('error-msg');
+  const successBlock = document.getElementById('success-block');
+  const downloadLink = document.getElementById('download-link');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorMsg.classList.remove('show');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Um momento...';
+
+    const payload = {
+      nome: document.getElementById('nome').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      whatsapp: document.getElementById('whatsapp').value.trim(),
+      data: new Date().toISOString()
+    };
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload)
+      });
+
+      downloadLink.href = DOCUMENT_URL;
+      form.classList.add('hide');
+      successBlock.classList.add('show');
+    } catch (err) {
+      errorMsg.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Quero o documento';
+    }
+  });
+</script>
+
+</body>
+</html>
